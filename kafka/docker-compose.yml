@@ -1,0 +1,58 @@
+
+version: '3'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    networks:
+      - default_network
+    ports:
+      - "2181:2181"
+    restart: unless-stopped
+
+  kafka:
+    image: wurstmeister/kafka
+    networks:
+      - default_network
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "TopicCurrency:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+  producer:
+    build: ./producer
+    restart: always
+    environment:
+      - KAFKA_HOST=${KAFKA_HOST}
+      - KAFKA_TOPIC=${KAFKA_TOPIC}
+    volumes:
+      - ./producer/main.py:/app/main.py
+    # command: python main.py --worker 5 --bootstrap-servers kafka:9092 --topic TopicCurrency
+    command: ["sleep", "infinity"]
+    depends_on:
+      - kafka
+
+  consumer:
+    build: ./consumer
+    restart: always
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_USER}
+      - KAFKA_HOST=${KAFKA_HOST}
+      - KAFKA_TOPIC=${KAFKA_TOPIC}
+    volumes:
+      - ./consumer/main.py:/app/main.python
+    # command: python main.py
+    command: ["sleep", "infinity"]
+    depends_on:
+      - kafka
+
+networks:
+  default_network:
+    name: default_network
