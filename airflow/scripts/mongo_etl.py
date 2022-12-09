@@ -3,14 +3,16 @@ import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
 import configparser
+import logging
 
 config = configparser.ConfigParser()
-config.read('../../config.ini')
+config.read('./config.ini')
 
 if __name__ == '__main__':
     # Initiate Mongo cursor
-    user = config['mongo']['user']
-    password = config['mongo']['password']
+    # user = config['mongo']['user']
+    user = 'agung'
+    password = 'passwordmongo'
     CONNECTION_STRING = f"mongodb+srv://{user}:{password}@cluster1.4jmnd4n.mongodb.net/?retryWrites=true&w=majority"
 
     client = MongoClient(CONNECTION_STRING)
@@ -24,6 +26,8 @@ if __name__ == '__main__':
     # Zips
     cursor_zips = zip_collection.find({}, {'_id': 0})
     zips_df = pd.DataFrame.from_dict(list(cursor_zips))
+
+    logging.info(f"[DATA ZIPS]: {zips_df.head(3)}")
 
     # flatten loc column to x=long and y=lat
     temp = pd.DataFrame(zips_df['loc'].tolist())
@@ -71,14 +75,15 @@ if __name__ == '__main__':
 
     # Load to Postgres
     #connection
-    password = config['postgres']['password']
+    # password = config['postgres']['password']
+    password = 'Sukses37'
     url = f'postgresql+psycopg2://postgres:{password}@localhost:5432/postgres'
     engine = create_engine(url)
 
     try:
         companies_df.to_sql('companies', index=False, con=engine, if_exists='replace')
         zips_df.to_sql('zips', index=False, con=engine, if_exists='replace')
-        print(f"Mongo Data has been load to Postgres Database Successfully")
+        logging.info(f"Mongo Data has been load to Postgres Database Successfully")
     except Exception as e:
-        print(f"Mongo ETL is Failed")
-        print(f"[ERROR]: {e}")
+        logging.info(f"Mongo ETL is Failed")
+        logging.error(e)
