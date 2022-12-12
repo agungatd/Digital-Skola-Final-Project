@@ -15,14 +15,14 @@ if __name__ == '__main__':
             driver='com.mysql.cj.jdbc.Driver',
             dbtable='home_credit_default_risk_application_train',
             user='root',
-            password='Sukses37').load()
+            password='password123').load()
 
       application_test = spark.read.format('jdbc').options(
             url='jdbc:mysql://localhost:3306/digital_skola',
             driver='com.mysql.cj.jdbc.Driver',
             dbtable='home_credit_default_risk_application_test',
             user='root',
-            password='Sukses37').load()
+            password='password123').load()
 
       spark = SparkSession \
             .builder \
@@ -37,11 +37,11 @@ if __name__ == '__main__':
             driver='org.postgresql.Driver',
             dbtable='home_credit_default_risk_application_train',
             user='postgres',
-            password='Sukses37').mode('overwrite').save()
+            password='password123').mode('overwrite').save()
 
       application_test.write.format('jdbc').options(
             url='jdbc:postgresql://localhost:3306/postgres',
             driver='org.postgresql.Driver',
             dbtable='home_credit_default_risk_application_test',
             user='postgres',
-            password='Sukses37').mode('overwrite').save()
+            password='password123').mode('overwrite').save()

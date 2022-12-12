@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, date
 from sqlalchemy import create_engine
 import logging
 
-engine = create_engine("postgresql://postgres:Sukses37@localhost:5432/postgres")
+engine = create_engine("postgresql://postgres:password123@localhost:5432/postgres")
 
 if __name__ == '__main__':
     companies = pd.read_sql(f"select * from companies", con=engine)

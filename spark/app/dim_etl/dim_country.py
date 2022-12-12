@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 import logging
 
 if __name__ == '__main__':
-    engine = create_engine("postgresql://postgres:Sukses37@localhost:5432/postgres")
+    engine = create_engine("postgresql://postgres:password123@localhost:5432/postgres")
 
     # Extract Data
     companies = pd.read_sql(f"select * from companies", con=engine)

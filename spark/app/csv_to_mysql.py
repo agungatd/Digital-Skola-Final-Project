@@ -5,7 +5,7 @@ if __name__ == '__main__':
     # initiate  spark
     spark = SparkSession \
         .builder \
-        .config("spark.jars", "/opt/bitnami/spark/jars/mysql-connector-java-8.0.30.jar") \
+        .config("spark.jars", "C:/Users/agung/Documents/DE - Digital Skola/digital_skola/projects/Digital-Skola-Final-Project/spark/resources/mysql-connector-java-8.0.30.jar") \
         .master("local") \
         .appName("ds9_final_project") \
         .getOrCreate()
@@ -30,11 +30,11 @@ if __name__ == '__main__':
         driver='com.mysql.jdbc.Driver',
         dbtable='home_credit_default_risk_application_train',
         user='root',
-        password='Sukses37').mode('overwrite').save()
+        password='password123').mode('overwrite').save()
 
     application_test.write.format('jdbc').options(
         url='jdbc:mysql://host.docker.internal:3306/digital_skola',
         driver='com.mysql.jdbc.Driver',
         dbtable='home_credit_default_risk_application_test',
         user='root',
-        password='Sukses37').mode('overwrite').save()
+        password='password123').mode('overwrite').save()

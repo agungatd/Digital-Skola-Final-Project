@@ -3,11 +3,10 @@ from sqlalchemy import create_engine
 import logging
 
 if __name__ == '__main__':
-    engine = create_engine("postgresql://postgres:Sukses37@localhost:5432/postgres")
+    engine = create_engine("postgresql://postgres:password123@localhost:5432/postgres")
 
     # Extract Data
     companies = pd.read_sql(f"select * from companies", con=engine)
-    dim_country = pd.read_sql(f"select * from dwh.dim_country", con=engine)
 
     # Transform Data
     # set dim_country data
@@ -28,9 +27,9 @@ if __name__ == '__main__':
     # Load Data
     try:
         res = dim_country.to_sql('dim_country', con=engine, schema='dwh', index=False, if_exists='replace')
-        print(f'success insert data to table: dim_country, inserted {res} data')
+        logging.info(f'success insert data to table: dim_country, inserted {res} data')
         res = dim_state.to_sql('dim_state', con=engine, schema='dwh', index=False, if_exists='replace')
-        print(f'success insert data to table: dim_state, inserted {res} data')
+        logging.info(f'success insert data to table: dim_state, inserted {res} data')
     except Exception as e:
-        print('Failed to insert data to table: dim_state')
-        print(f'ERROR: {e}')
+        logging.error('Failed to insert data to table: dim_state')
+        logging.error(e)

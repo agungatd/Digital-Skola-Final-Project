@@ -7,7 +7,7 @@ from sklearn.linear_model import LogisticRegression
 
 import logging
 
-engine = create_engine("postgresql://postgres:Sukses37@localhost:5432/postgres")
+engine = create_engine("postgresql://postgres:password123@localhost:5432/postgres")
 
 if __name__ == '__main__':
     # Read the data

@@ -25,7 +25,7 @@ def main(bootstrap_servers: str, topic: str, tablename: str, logger: logging.Log
             "host": "localhost",
             "port": "5432",
             "user": "postgres",
-            "password": "Sukses37"
+            "password": "password123"
         },
         tablename = tablename
     )

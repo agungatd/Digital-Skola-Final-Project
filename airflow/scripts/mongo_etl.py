@@ -76,7 +76,7 @@ if __name__ == '__main__':
     # Load to Postgres
     #connection
     # password = config['postgres']['password']
-    password = 'Sukses37'
+    password = 'password123'
     url = f'postgresql+psycopg2://postgres:{password}@localhost:5432/postgres'
     engine = create_engine(url)
 
