@@ -14,12 +14,6 @@ def main(bootstrap_servers: str, topic: str, tablename: str, logger: logging.Log
     cns = consumer.Consumer(
         bootstrap_servers = bootstrap_servers,
         topic = topic,
-        # db_config = {
-        #     "host": os.environ.get("DB_HOST"),
-        #     "port": os.environ.get("DB_PORT"),
-        #     "user": os.environ.get("DB_USER"),
-        #     "password": os.environ.get("DB_PASSWORD")
-        # },
         db_config = {
             # "host": "host.docker.internal",
             "host": "localhost",

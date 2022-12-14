@@ -78,7 +78,7 @@ class Consumer(KafkaConsumer):
                 "currency_code": curr,
                 "currency_name": curr_name,
                 "rate": data[curr]["rate"],
-                "timestamp": data[curr]["timestamp"]
+                "timestamp": datetime.fromtimestamp( data[curr]["timestamp"] )
             }
             fmt_data_.append(fmt_data)
         return fmt_data_
